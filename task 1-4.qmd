@@ -1,0 +1,444 @@
+---
+title: "Task1"
+author: "Artem"
+date: "14/10/2025"
+format:
+  html:
+    embed-resources: true
+editor: source
+---
+
+## Question 1 title
+
+Question description Atomic Types
+
+Create the following variables related to your chosen object:
+
+4 numeric values (e.g., population, temperature, size, rating)
+3 integer values (e.g., number of moons, buildings, inhabitants)
+2 logical values (e.g., has_water, is_inhabited)
+3 character values (e.g., name, region, category)
+
+My object is Kiev city
+
+```{r}
+# code for solving task
+#numeric
+
+
+temperature <- 1.15
+population <- 2.904346
+size <- 8.398470
+cars <- 9.242323
+
+#integer
+
+
+skyscrapers <- 1222
+inhabitants <- 2483789
+shopingsmalls <- 78
+
+#logical
+
+
+river <- TRUE
+ocean <- FALSE
+
+
+#character
+
+
+name <- "OleksandrUsyk"
+region <- "Kiev"
+name <- "Shevchenko"
+
+
+
+
+
+
+## Question 1.2.Vectors
+
+
+# 1. Numeric vector (mix of numeric and integer values)
+numeric_vector <- c(temperature, population, size, cars)
+numeric_vector
+
+# 2. Sequence vector from 25 to 100 with a step of 5
+sequence_vector <- seq(from = 25, to = 100, by = 5)
+sequence_vector
+
+# 3. Logical vector of length 10 with random TRUE/FALSE values
+set.seed(7)  # set seed for reproducibility
+logical_vector <- sample(c(TRUE, FALSE), size = 10, replace = TRUE)
+logical_vector
+
+
+## Question 1.3.Matrix
+
+
+# Create a 3x3 matrix with random integers between -50 and 50
+set.seed(10)  # for reproducibility
+env_matrix <- matrix(sample(-50:50, 9 ), nrow = 3, ncol = 3)
+
+env_matrix
+
+rowMeans(env_matrix)
+colMeans(env_matrix)
+
+
+
+
+
+
+```
+## Question 1.4. List
+
+Question description
+
+```{r}
+# code for solving task
+my_list <- list(population, skyscrapers, river, name, numeric_vector, sequence_vector, logical_vector, env_matrix)
+my_list
+```
+## Question 5 Factor
+
+Question description
+
+Create a factor variable representing categories within your universe, e.g.:
+
+```{r}
+# code for solving task
+
+my_factor <- factor(c("big", "big", "small", "medium", "small"), levels = c("small", "medium", "big"))
+my_factor
+```
+## Question 6 Data Frame
+
+Question description
+
+Create a data frame related to your object that includes:
+
+5–8 observations (rows)
+At least 3 columns of different data types
+(e.g., name, numeric value, logical flag, category)
+Then:
+
+Rename the columns using names() or colnames().
+Display its structure with str() and its summary with summary().
+Add a new column derived from the others (for example, a ratio or condition).
+
+```{r}
+data <- data.frame(name=c("centr","chreshatik", "ziloti", "piyanavishnya", "maka_scena"), numeric = c(16.4, 14.6, 25.7, 25.1, 18.2), logical = c(T, F, F, T, T), category = c("big", "small", "medium", "medium", "small"))
+
+colnames(data) <- c("name", "size", "has_mall", "size")
+
+data
+
+str(data)
+
+summary(data)
+
+data$size_ratio <- data$size / max(data$size)
+
+data
+
+```
+---
+title: "Task2"
+author: "Artem"
+date: "04/11/2025"
+format:
+  html:
+    embed-resources: true
+editor: source
+---
+
+## Task 2: Subsetting & Missing Data
+
+Question description
+
+Work with objects created in Task 1.
+
+```{r}
+# Recreate necessary data from Task 1
+
+temperature <- 1.15
+population <- 2.904346
+size <- 8.398470
+cars <- 9.242323
+
+skyscrapers <- 1222
+inhabitants <- 2483789
+shopingsmalls <- 78
+
+river <- TRUE
+ocean <- FALSE
+
+name <- "Shevchenko"
+region <- "Kiev"
+
+numeric_vector <- c(temperature, population, size, cars)
+sequence_vector <- seq(from = 25, to = 100, by = 5)
+set.seed(7)
+logical_vector <- sample(c(TRUE, FALSE), size = 10, replace = TRUE)
+
+set.seed(10)
+env_matrix <- matrix(sample(-50:50, 9), nrow = 3, ncol = 3)
+
+my_list <- list(population, skyscrapers, river, name, numeric_vector, sequence_vector, logical_vector, env_matrix, description = region)
+
+data <- data.frame(
+  name = c("centr","chreshatik", "ziloti", "piyanavishnya", "maka_scena"),
+  size = c(16.4, 14.6, 25.7, 25.1, 18.2),
+  has_mall = c(T, F, F, T, T),
+  category = c("big", "small", "medium", "medium", "small")
+)
+```
+
+## 2.1 Querying Vectors
+
+```{r}
+# 2.1.1 Sequence Vector
+sequence_vector[3]            # Select and print 3rd element
+sequence_vector[2:5]          # Select and print elements 2–5
+sequence_vector[sequence_vector > 50]   # Values greater than 50
+
+# 2.1.2 Logical Vector
+logical_vector[logical_vector]   # Only TRUE values
+which(logical_vector)            # Indices of TRUE values
+```
+
+## 2.2 Querying Your “Universe” List
+
+```{r}
+# Access and print the description string using $
+my_list$description
+
+# Access and print your 3x3 matrix using [[ ]]
+my_list[[8]]
+
+# Access and print the second element from numeric_vector inside the list
+my_list[[5]][2]
+```
+
+## 2.3 Investigating Your Data Frame
+
+```{r}
+# Print the first 3 rows
+head(data, 3)
+
+# Print the value from 4th row, 1st column
+data[4, 1]
+
+# Print only the logical column
+data$has_mall
+
+# Logical subsetting: rows where size > 20
+df_subset <- data[data$size > 20, ]
+df_subset
+
+# %in% subsetting: select small and medium
+df_subset_2 <- data[data$category %in% c("small", "medium"), ]
+df_subset_2
+```
+
+## 2.4 Handling “Corrupted” Data (NA)
+
+```{r}
+# Copy data frame
+df_corrupted <- data
+
+# Introduce 3 NAs
+df_corrupted[2, 2] <- NA
+df_corrupted[5, 3] <- NA
+df_corrupted[3, 4] <- NA
+
+df_corrupted
+
+# Find NAs
+sum(is.na(df_corrupted))
+colSums(is.na(df_corrupted))
+
+# Mean of size column (with and without NA)
+mean(df_corrupted$size)
+mean(df_corrupted$size, na.rm = TRUE)
+
+# Filter out rows with NAs
+df_clean <- na.omit(df_corrupted)
+df_clean
+```
+
+## 2.5 Bonus Challenge: which()
+
+```{r}
+# Find the row with highest and lowest size
+highest_size_index <- which.max(data$size)
+data[highest_size_index, ]
+
+lowest_size_index <- which.min(data$size)
+data[lowest_size_index, ]
+```
+
+
+`---
+title: "Task 3: Real World Dataset"
+author: "Artem"
+format:
+  html:
+    embed-resources: true
+editor: source
+---
+
+## 3.1 Choose & Load Your Dataset
+
+Dataset source: Local file uploaded by student  
+File: **kiev_districts.csv**
+
+```{r}
+library(dplyr)
+library(readr)
+
+data <- read_csv("C:/Users/makuh/OneDrive/Рабочий стол/ua.csv")
+
+glimpse(data)
+
+
+
+# First inspection
+glimpse(data)
+head(data)
+summary(data)
+```
+```{r}
+data %>% 
+  select(city, population) %>% 
+  arrange(desc(population)) %>% 
+  head(5)
+
+```
+```{r}
+data %>%
+group_by(admin_name) %>% 
+  summarise(avg_population = mean(population, na.rm = TRUE)) %>% 
+  arrange(desc(avg_population))
+```
+```{r}
+data %>% 
+  group_by(capital) %>% 
+  summarise(count = n())
+```
+```{r}
+data %>% 
+  filter(!is.na(population), !is.na(population_proper)) %>% 
+  filter(population_proper < population) %>% 
+  select(city, population, population_proper)
+```
+```{r}
+data %>% 
+filter(lat > 50) %>% 
+  select(city, lat, admin_name, population)
+```
+---
+title: "Task 4: Functions Toolkit"
+author: "Artem"
+format:
+  html:
+    embed-resources: true
+editor: source
+---
+
+## Task 4: Building a Toolkit for Your Universe (Functions)
+
+```r
+library(dplyr)
+library(readr)
+```
+
+---
+
+## 4.1 Greeting Function
+
+```r
+welcome_universe <- function(your_name, universe_name) {
+  cat("----------------------------------------\n")
+  cat("Welcome to the Analysis Toolkit for:", universe_name, "\n")
+  cat("Report prepared by:", your_name, "\n")
+  cat("----------------------------------------\n\n")
+}
+
+# Call the function
+welcome_universe("Artem", "Kiev City Dataset")
+```
+
+---
+
+## 4.2 Loading Function
+
+```r
+load_and_inspect <- function(file_path) {
+
+  data <- read_csv(file_path)
+
+  cat("---- Data Loaded Successfully ----\n")
+  print(glimpse(data))
+
+  cat("\n---- First 6 Rows ----\n")
+  print(head(data))
+
+  return(data)
+}
+
+# Call the function
+my_data <- load_and_inspect("C:/Users/makuh/OneDrive/Рабочий стол/ua.csv")
+```
+
+---
+
+## 4.3 Query Function (based on Task 3)
+
+```r
+find_avg_population <- function(data, admin_region) {
+  result <- data %>%
+    filter(admin_name == admin_region) %>%
+    summarise(avg_population = mean(population, na.rm = TRUE))
+
+  return(result)
+}
+
+# Example calls
+find_avg_population(my_data, "Kyiv City")
+find_avg_population(my_data, "Lvivska Oblast")
+```
+
+---
+
+## 4.4 Reporting Function
+
+```r
+generate_report <- function(data, region_name) {
+
+  region_data <- data %>%
+    filter(admin_name == region_name)
+
+  count_cities <- nrow(region_data)
+  max_population <- max(region_data$population, na.rm = TRUE)
+  min_population <- min(region_data$population, na.rm = TRUE)
+  avg_lat <- mean(region_data$lat, na.rm = TRUE)
+
+  cat("=====================================\n")
+  cat("        Report for:", region_name, "\n")
+  cat("=====================================\n")
+  cat("Number of cities:", count_cities, "\n")
+  cat("Maximum population:", max_population, "\n")
+  cat("Minimum population:", min_population, "\n")
+  cat("Average latitude:", round(avg_lat, 3), "\n")
+  cat("=====================================\n\n")
+}
+
+# Example calls
+generate_report(my_data, "Kyiv City")
+generate_report(my_data, "Odeska Oblast")
+```
+
+
